@@ -1,0 +1,27 @@
+
+.card_login {
+    color: var(--color-orange-);
+    border: solid var(--color-green-) 1px;
+}
+
+.card_login h4,span,label {
+    color: var(--color-orange-) !important;
+}
+
+.card_login i {
+    color: var(--color-orange-);
+}
+
+.card_login .btn-success {
+    background-color: var(--color-green-);
+}
+
+.card_login input:focus + .input-group{
+    border: solid var(--color-orange-) 0.3px;
+    border-radius: 7px;
+}
+
+body {
+    background-image: url("img/background.jpg");
+    background-size: cover;
+}

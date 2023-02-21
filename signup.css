@@ -1,0 +1,28 @@
+
+.signup_error {
+    color: orange;
+    font-size: 13px;
+}
+
+.card_login {
+    background-color: var(--color-green-);
+    color: var(--color-orange-05-);
+    border: solid var(--color-orange-05-) 1px;
+}
+
+.card_login h4,span,label {
+    color: var(--color-orange-05-) !important;
+}
+
+.card_login i {
+    color: var(--color-orange-);
+}
+
+.card_login input:focus .input-group{
+    border: solid var(--color-orange-) 0.3px;
+}
+
+body {
+    background-image: url("img/forest.jpg");
+    background-size: cover;
+}
