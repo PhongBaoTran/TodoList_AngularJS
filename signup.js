@@ -35,7 +35,9 @@ angular.module('app_signup', ['ngStorage', 'ui.bootstrap'])
                         "ID": userList.length,
                         "UserName": this.signup_username,
                         "Password": this.signup_pass,
+                        "Avatar": 'assets/img/avatars/' + (Math.floor(Math.random() * 4) + 1) +'.png'
                     }
+                    window.localStorage.setItem('logonID', JSON.stringify({"ID" : (userList.length)}))
                     userList.push(user)
                     window.localStorage.setItem('user', JSON.stringify(userList))
                     window.location.href = 'Index.html'

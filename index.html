@@ -368,8 +368,8 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <tr ng-repeat="task in $root.arr_tasks | orderBy :
-                        sortColumn : reverseSort" ng-click="funcShowInfo(task.ID)" data-bs-toggle="modal" data-bs-target="#modal_info">
-                        <td><strong>{{task.Name}}</strong></td>
+                        sortColumn : reverseSort">
+                        <td ng-click="funcShowInfo(task.ID)" data-bs-toggle="modal" data-bs-target="#modal_info"><strong>{{task.Name}}</strong></td>
                         <td>{{task.DateStart | date: 'yyyy-MM-dd'}}</td>
                         <td>{{task.DeadLine | date: 'yyyy-MM-dd'}}</td>
                         <td>
