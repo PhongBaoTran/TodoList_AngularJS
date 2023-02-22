@@ -106,3 +106,41 @@ aside {
     margin: 0 auto !important;
     color: var(--color-green-) !important;
 }
+
+.app-brand-link i{
+    color: var(--color-green-);
+    margin-left: 30px;
+}
+
+#modal_info table td:nth-child(1){
+    max-width: 30%;
+}
+
+#modal_info table td:nth-child(1) label{
+    color: var(--color-green-) !important;
+    font-weight: 600;
+    font-size: 13px;
+}
+#modal_info table td:nth-child(2){
+    min-width: 70%;
+}
+
+#modal_info table td:nth-child(2) label{
+    font-size: 13px;
+}
+
+#modal_info table{
+    width: 100%;
+}
+
+
+#modal_info table td:nth-child(1){
+    width: 100%;
+    text-align: justify;
+}
+
+#modal_info table textarea{
+    color: var(--color-green-);
+    background-color: white;
+    min-height: 100px;
+}

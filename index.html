@@ -90,6 +90,7 @@
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="demo menu-text fw-bolder ms-2 todo-logo">TODO LIST</span>
+              <i class="bx bx-list-check bx-sm align-middle"></i>
             </a>
 
             <a href="javascript:void(0);" class="layout-menu-toggle menu-link
@@ -109,13 +110,13 @@
               </a>
             </li>
 
-            <!-- Layouts -->
-            <li class="menu-item">
+            <!--
+<li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Layouts</div>
               </a>
-
+              
               <ul class="menu-sub">
                 <li class="menu-item">
                   <a href="layouts-without-menu.html" class="menu-link">
@@ -144,6 +145,9 @@
                 </li>
               </ul>
             </li>
+            -->
+            <!-- Layouts -->
+            
           </ul>
         </aside>
         <div class="layout-page">
@@ -364,7 +368,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <tr ng-repeat="task in $root.arr_tasks | orderBy :
-                        sortColumn : reverseSort">
+                        sortColumn : reverseSort" ng-click="funcShowInfo(task.ID)" data-bs-toggle="modal" data-bs-target="#modal_info">
                         <td><strong>{{task.Name}}</strong></td>
                         <td>{{task.DateStart | date: 'yyyy-MM-dd'}}</td>
                         <td>{{task.DeadLine | date: 'yyyy-MM-dd'}}</td>
@@ -503,6 +507,84 @@
               </div>
               <!--modal edit task-->
 
+              <!--modal task info-->
+              <div class="modal fade" id="modal_info" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalCenterTitle"
+                          style="color: #006a4e; font-weight: 900;">TASK INFORMATION</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table-sm table-border">
+                        <tr>
+                          <td>
+                            <label class="form-label">Task name:</label>
+                          </td>
+                          <td>
+                            <label class="form-label">{{current_task.Name}}</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label class="form-label">Start date:</label>
+                          </td>
+                          <td>
+                            <label class="form-label">{{current_task.DateStart | date: 'yyyy-MM-dd'}}</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label class="form-label">End date:</label>
+                          </td>
+                          <td>
+                            <label class="form-label">{{current_task.DeadLine | date: 'yyyy-MM-dd'}}</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label class="form-label">Added on:</label>
+                          </td>
+                          <td>
+                            <label class="form-label">{{current_task.DateAdd | date: 'yyyy-MM-dd'}}</label>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label class="form-label">Current state:</label>
+                          </td>
+                          <td>
+                            <span class="badge {{current_task.Color}} me-1">{{current_task.Status}}</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <label class="form-label">Comment:</label>
+                          </td>
+                          <td>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <textarea class="form-control" readonly>{{current_task.Comment}}</textarea>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="btn_close_info">
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--modal task info-->
             </div>
           </div>
 

@@ -21,4 +21,10 @@ angular.module('app_login', ['ngStorage', 'ui.bootstrap'])
                 window.location.href = "Index.html"
             }
         }
+
+        $scope.funcCheckLogin = function(){
+            if(window.localStorage.getItem('logonID').ID != null){
+                window.location.href = 'index.html'
+            }
+        }
     }]);

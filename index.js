@@ -125,6 +125,8 @@ app.controller('ctrl_search', function ($scope, fac_todo, $rootScope) {
         fac_todo.load_user_todo()
         fac_todo.load_task_by_name(fac_todo.get_tasks(), this.txt_search)
         $rootScope.arr_tasks = fac_todo.get_tasks()
+        $rootScope.arr_tasks = fac_todo.set_style($rootScope.arr_tasks)
+        $rootScope.arr_tasks = fac_todo.sort_by_date_add($rootScope.arr_tasks)
     }
 })
 
@@ -222,7 +224,7 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac
     $scope.sortColumn = "Sort";
     $scope.reverseSort = false;
     $scope.sortData = function (columnIndex) {
-        console.log(columnIndex)
+        // console.log(columnIndex)
         $scope.reverseSort = ($scope.sortColumn == $scope.arr_headers[columnIndex]) ? !$scope.reverseSort : false;
         $scope.sortColumn = $scope.arr_headers[columnIndex];
     }
@@ -313,5 +315,13 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac
         $scope.funcLoadUserTodo()
 
         document.querySelector('#btn_close_delete').click()
+    }
+
+    // info task
+    $scope.funcShowInfo = function(id){
+        $scope.current_task = fac_todo.get_task_by_id(id)
+        var tempArr = []
+        tempArr.push($scope.current_task)
+        fac_todo.set_style(tempArr)
     }
 })
