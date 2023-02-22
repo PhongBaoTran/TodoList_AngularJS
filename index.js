@@ -127,6 +127,7 @@ app.controller('ctrl_search', function ($scope, fac_todo, $rootScope) {
         $rootScope.arr_tasks = fac_todo.get_tasks()
         $rootScope.arr_tasks = fac_todo.set_style($rootScope.arr_tasks)
         $rootScope.arr_tasks = fac_todo.sort_by_date_add($rootScope.arr_tasks)
+
     }
 })
 
@@ -234,6 +235,9 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac
         $scope.sortColumn = "Sort";
         $scope.reverseSort = false;
         this.funcLoadUserTodo()
+
+        document.querySelector('#txt_search').value = ''
+        document.querySelector('#select_state').selectedIndex = 1;
     }
 
     // task edit
@@ -324,4 +328,6 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac
         tempArr.push($scope.current_task)
         fac_todo.set_style(tempArr)
     }
+
+
 })
