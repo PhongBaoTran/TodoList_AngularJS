@@ -144,3 +144,9 @@ aside {
     background-color: white;
     min-height: 100px;
 }
+
+@media (max-width: 768px) {
+    .card-table-todo table td:nth-child(2),td:nth-child(3),th:nth-child(2),th:nth-child(3){
+        display: none;
+    }
+  }
