@@ -149,4 +149,8 @@ aside {
     .card-table-todo table td:nth-child(2),td:nth-child(3),th:nth-child(2),th:nth-child(3){
         display: none;
     }
+  
+    #modal_info table td:nth-child(2){
+        display: unset;
+    }
   }
