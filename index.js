@@ -19,7 +19,7 @@ app.factory('fac_user', function () {
 })
 
 // fac todo
-app.factory('fac_todo', function () {
+app.factory('fac_todo', function ($filter) {
     var tasks = {}
     return {
         load_user_todo: function () {
@@ -64,6 +64,30 @@ app.factory('fac_todo', function () {
         },
         set_todo: function (arr) {
             window.localStorage.setItem('todo', JSON.stringify(arr))
+        },
+        get_task_by_id: function(id){
+            var user = JSON.parse(window.localStorage.getItem('logonID'))
+            var todo = JSON.parse(window.localStorage.getItem('todo'))
+            var index = 0
+            for(var i in todo){
+                if(todo[i].UID == user.ID && todo[i].ID == id){
+                    index = i
+                }
+            }
+            return todo[index]
+        },
+        set_style: function(arr){
+            for (var i in arr) {
+                arr[i].Color = (arr[i].Status == arrStatus[0]) ? 'bg-success'
+                    : (arr[i].Status == arrStatus[1]) ? 'bg-warning'
+                        : (arr[i].Status == arrStatus[2]) ? 'bg-danger'
+                            : 'bg-secondary'
+            }
+            return arr
+        },
+        sort_by_date_add: function(arr){
+            arr = $filter('orderBy')(arr, 'DateAdd', true)
+            return arr
         }
     }
 })
@@ -175,28 +199,23 @@ app.controller('ctrl_filter', function ($scope, fac_todo, $rootScope, $filter) {
             fac_todo.load_task_by_status(fac_todo.get_tasks(), this.select_state)
             $rootScope.arr_tasks = fac_todo.get_tasks()
         }
-        $rootScope.arr_tasks = $filter('orderBy')(this.arr_tasks, 'DateAdd', true)
+        $rootScope.arr_tasks = fac_todo.set_style($rootScope.arr_tasks)
+        $rootScope.arr_tasks = fac_todo.sort_by_date_add($rootScope.arr_tasks)
     }
 })
 
 
 
 // ctrl todo
-app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope) {
+app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac_user) {
     // load todo
     $scope.arr_headers = ["Name", "From", "To", "Status", "Sort"]
 
     $scope.funcLoadUserTodo = function () {
         fac_todo.load_user_todo()
         $rootScope.arr_tasks = fac_todo.get_tasks()
-        for (var i in $rootScope.arr_tasks) {
-            $rootScope.arr_tasks[i].Color = ($rootScope.arr_tasks[i].Status == arrStatus[0]) ? 'bg-success'
-                : ($rootScope.arr_tasks[i].Status == arrStatus[1]) ? 'bg-warning'
-                    : ($rootScope.arr_tasks[i].Status == arrStatus[2]) ? 'bg-danger'
-                        : 'bg-secondary'
-        }
-
-        $rootScope.arr_tasks = $filter('orderBy')($rootScope.arr_tasks, 'DateAdd', true)
+        $rootScope.arr_tasks = fac_todo.set_style($rootScope.arr_tasks)
+        $rootScope.arr_tasks = fac_todo.sort_by_date_add($rootScope.arr_tasks)
     }
 
     // sort table
@@ -216,10 +235,83 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope) {
     }
 
     // task edit
-    $scope.funcTaskDetail = function(task){
-        console.log(task)
+    $scope.funcTaskDetail = function(id){
+        var task = fac_todo.get_task_by_id(id)
+        $scope.current_task = task
+        $scope.txt_edit_name = task.Name
+        $scope.date_edit_start = new Date(task.DateStart)
+        $scope.date_edit_end = new Date(task.DeadLine)
+        $scope.edit_state = arrStatus
+        $scope.select_edit_state = task.Status
+        $scope.txt_edit_comment = task.Comment
+
+        if(task.Status == 'Done'){
+            $("#txt_edit_name").prop('readonly', true);
+            $("#date_edit_start").prop('readonly', true);
+            $("#date_edit_end").prop('readonly', true);
+            $('#select_edit_state').prop('disabled', 'disabled');
+            $('#txt_edit_comment').prop('readonly', true);
+            $scope.editable = false;
+        }
+        else{
+            $("#txt_edit_name").prop('readonly', false);
+            $("#date_edit_start").prop('readonly', false);
+            $("#date_edit_end").prop('readonly', false);
+            $('#select_edit_state').prop('disabled', false);
+            $('#txt_edit_comment').prop('readonly', false);
+            $scope.editable = true;
+        }
     }
-    $scope.funcCheckEdit() = function(){
-        
+
+    // save edit task
+    $scope.funcEdit = function(id){
+        var uid = (fac_user.get_user()).ID
+        fac_todo.load_all_tasks()
+        var todo = fac_todo.get_tasks()
+        var task = todo[0]
+        var index = 0
+        for(var i in todo){
+            if(todo[i].UID == uid && todo[i].ID == id){
+                task = {
+                    "UID": parseInt(uid),
+                    "ID": id,
+                    "Name": $scope.txt_edit_name,
+                    "Status": $scope.select_edit_state,
+                    "DateStart": $scope.date_edit_start,
+                    "DeadLine": $scope.date_edit_end,
+                    "DateAdd": todo[i].DateAdd,
+                    "Comment": $scope.txt_edit_comment
+                }
+                index = i
+            }
+        }
+        todo[index] = task
+        fac_todo.set_todo(todo)
+        this.funcLoadUserTodo()
+
+        document.querySelector('#btn_close_edit').click()
+    }
+    
+    // delete task
+    $scope.funcLoadDelete = function(id){
+        $scope.current_task = fac_todo.get_task_by_id(id)
+    }
+
+    $scope.funcDeleteTask = function(){
+        fac_todo.load_all_tasks()
+        var todo = fac_todo.get_tasks()
+        var index
+        for(var i in todo){
+            if(todo[i].UID == $scope.current_task.UID 
+                && todo[i].ID == $scope.current_task.ID){
+                    index = i
+                }
+        }
+        todo.splice(index, 1)
+
+        fac_todo.set_todo(todo)
+        $scope.funcLoadUserTodo()
+
+        document.querySelector('#btn_close_delete').click()
     }
 })

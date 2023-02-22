@@ -77,16 +77,16 @@ aside {
     font-weight: 800;
 }
 
-.card-control .modal-content input {
+.modal-content input {
     border: var(--color-green-) 1px solid;
     color: var(--color-green-);
 }
 
-.card-control .modal-content input:focus {
+.modal-content input:focus {
     border: var(--color-green-05-) 1px solid;
 }
 
-.card-control .modal-content select, textarea {
+.modal-content select, textarea {
     border: var(--color-green-) 1px solid !important;
     color: var(--color-green-);
 }
@@ -99,4 +99,10 @@ aside {
 .span-error {
     font-size: 13px;
     color: red;
+}
+
+.todo-logo {
+    font-weight: 700 !important;
+    margin: 0 auto !important;
+    color: var(--color-green-) !important;
 }
