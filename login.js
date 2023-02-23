@@ -14,7 +14,8 @@ angular.module('app_login', ['ngStorage', 'ui.bootstrap'])
                 }
             }
             if (exists == false) {
-                window.alert("Wrong user name or password!")
+                // window.alert("Wrong user name or password!")
+                $scope.error = true
             }
             else {
                 window.localStorage.setItem('logonID', JSON.stringify(logonID))

@@ -28,7 +28,8 @@ angular.module('app_signup', ['ngStorage', 'ui.bootstrap'])
                     }
                 }
                 if (exists == true) {
-                    window.alert("User name already existed!")
+                    // window.alert("User name already existed!")
+                    $scope.isExists = true
                 }
                 else {
                     var user = {

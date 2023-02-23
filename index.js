@@ -165,15 +165,8 @@ app.controller('ctrl_add', function ($scope, $rootScope, fac_user, fac_todo, $fi
 
             fac_todo.load_user_todo()
             $rootScope.arr_tasks = fac_todo.get_tasks()
-            for (var i in $rootScope.arr_tasks) {
-                $rootScope.arr_tasks[i].Color = ($rootScope.arr_tasks[i].Status == arrStatus[0]) ? 'bg-success'
-                    : ($rootScope.arr_tasks[i].Status == arrStatus[1]) ? 'bg-warning'
-                        : ($rootScope.arr_tasks[i].Status == arrStatus[2]) ? 'bg-danger'
-                            : 'bg-secondary'
-            }
-
-            $rootScope.arr_tasks = $filter('orderBy')($rootScope.arr_tasks, 'DateAdd', true)
-
+            $rootScope.arr_tasks = fac_todo.set_style($rootScope.arr_tasks)
+            $rootScope.arr_tasks = fac_todo.sort_by_date_add($rootScope.arr_tasks)
             document.querySelector('#btn_close_add').click()
         }
     }
@@ -328,6 +321,4 @@ app.controller('ctrl_todo', function ($scope, fac_todo, $filter, $rootScope, fac
         tempArr.push($scope.current_task)
         fac_todo.set_style(tempArr)
     }
-
-
 })

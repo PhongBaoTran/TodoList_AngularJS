@@ -107,6 +107,10 @@
                                         ng-model="login_username"
                                         autofocus
                                         />
+                                        <div class="signup_error"
+                                    ng-show="error">
+                                    *Wrong username or password
+                                </div>
                                 </div>
                                 <div class="mb-3 form-password-toggle">
                                     <div class="d-flex justify-content-between">

@@ -99,6 +99,7 @@
                                 <label for="email" class="form-label">User
                                     name</label>
                                 <input
+                                    ng-change="isExists = false"
                                     type="text"
                                     class="form-control"
                                     id="txtLoginName"
@@ -109,6 +110,10 @@
                                 <div class="signup_error"
                                     ng-show="signup_username == ''">
                                     *User name is required
+                                </div>
+                                <div class="signup_error"
+                                    ng-show="isExists">
+                                    *User name already exists
                                 </div>
                             </div>
                             <div class="mb-3 form-password-toggle">
